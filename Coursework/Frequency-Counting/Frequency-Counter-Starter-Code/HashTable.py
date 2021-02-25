@@ -66,7 +66,7 @@ class HashTable:
         pointer = (pointer + 1) % self.size
       self.arr[key_hash].append((key,value))
       return key_hash
-      
+
 
 
 
@@ -83,7 +83,12 @@ class HashTable:
   # erase: 2
 
   def print_key_values(self):
-    pass
+    if self.size == None:
+      print("empty")
+      return -1
+    else:
+      for i in self.arr:
+        i.print_nodes()
 
 
 
