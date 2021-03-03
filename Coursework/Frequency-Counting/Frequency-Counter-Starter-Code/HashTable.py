@@ -13,11 +13,12 @@ class HashTable:
   # This method creates an array (list) of a given size and populates each of its elements with a LinkedList object.
 
   def create_arr(self, size):
-     arr = []
-
-     for i in range(size):
-       new_ll = LinkedList()
-       arr.append(new_ll)
+      #instantiation of array
+    arr = []
+    #uses the size parameter to append one Linked List function call to each index within range
+    for i in range(size):
+      new_ll = LinkedList()
+      arr.append(new_ll)
 
     return arr
 
@@ -29,16 +30,8 @@ class HashTable:
   # Hash functions are a function that turns each of these keys into an index value that we can use to decide where in our list each key:value pair should be stored. 
 
   def hash_func(self, key):
-    #Find first letter of key and lower case
-    first_letter = key[0].lower()
+    return (ord(key[0]) - ord('s')) % self.size
 
-    #Calculate distance from letter a
-    distance_from_a = ord(first_letter) - ord('a')
-
-    #Modulo it for remainder to make sure it is in range
-    index = distance_from_a % self.size
-
-    return index
 
 
 
@@ -48,24 +41,22 @@ class HashTable:
 
   def insert(self, key, value):
     #Find the index where the key value should be placed
-    key_hash = self.hash_func(key)
+    key_index = self.hash_func(key)
 
-    #Check to see if the bucket is empty
-    if self.arr[key_hash] == None:
-      self.arr[key_hash] = (key, value)
-      return key_hash
-    else:
-      pointer = (key_hash + 1) % self.size
+    # range of index value to tell if key is found within array
+    found = self.arr[key_index].find(key)
 
-    while pointer != key_hash:
-      if self.arr[pointer] == None:
-        self.arr[pointer] == (key, value)
-        return pointer
+    # if key is within array, take the value associated with it and increment it according to frequency of occurance
+    if found == -1:
+        toople = (key, value)
+        self.arr[key_index].append(toople)
 
-      else:
-        pointer = (pointer + 1) % self.size
-      self.arr[key_hash].append((key,value))
-      return key_hash
+
+    # inserting the associated tuple into the Linked List 
+       
+
+
+
 
 
 
@@ -89,6 +80,7 @@ class HashTable:
     else:
       for i in self.arr:
         i.print_nodes()
+
 
 
 
